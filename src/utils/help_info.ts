@@ -1,25 +1,31 @@
 export const getInfo = () => (`
-            Verwendung: todo-cli [Optionen] [Argumente]
+            Usage: todo-cli [Options] [Arguments]
 
-            Optionen:
-            --create             Erstellt eine neue Todo-Liste im aktuellen Verzeichnis.
-            --show               Zeigt die aktuelle Todo-Liste im aktuellen Verzeichnis an.
-            --show -d            Zeigt die erlidigte tasks in Todo-Liste im aktuellen Verzeichnis an.
-            --add <Text>         Fügt eine neue Aufgabe zur aktuellen Todo-Liste im aktuellen Verzeichnis hinzu.
-            --delete <Index>     Löscht eine Aufgabe aus der aktuellen Todo-Liste im aktuellen Verzeichnis anhand des Index.
-            --done <Index>       Markiert eine Aufgabe als erledigt in der aktuellen Todo-Liste im aktuellen Verzeichnis.
-            -r, --reset          Löscht die aktuelle Todo-Liste im aktuellen Verzeichnis.
-            -h, --help           Zeigt Hilfe zur Verwendung der CLI an.
+            Options:
+            --create             Creates a new todo list in the current directory.
+            --create -ig         Creates a new todo list and adds it to .gitignore.
+            --show               Shows the current todo list in the current directory.
+            --show -d            Shows the completed tasks in the todo list in the current directory.
+            --show -hidden       Shows the hidden completed tasks in the todo list in the current directory.
+            --add <Text>         Adds a new task to the current todo list in the current directory.
+            --delete <Index>     Deletes a task from the current todo list in the current directory based on the index.
+            --delete -d <Index>  Deletes a task from the done todo list in the current directory based on the index.
+            --done <Index>       Marks a task as done in the current todo list in the current directory.
+            --hide <Index>       Hides a task from the done todo list in the current directory based on the index.
+            --ignore             Add todo list to .gitignore
+            --ignore -n          Removes todo list from .gitignore
+            -r, --reset          Deletes the current todo list in the current directory.
+            -h, --help           Shows help for using the CLI.
 
-            Argumente:
-            <Text>               Der Text für eine neue Aufgabe, der mit --add verwendet wird.
-            <Index>              Der Index der Aufgabe, die mit --delete oder --done gelöscht bzw. als erledigt markiert werden soll.
+            Arguments:
+            <Text>               The text for a new task to be used with --add.
+            <Index>              The index of the task to be deleted or marked as done using --delete or --done.
 
-            Beispiele:
-            todo-cli --create                                  # Erstellt eine neue Todo-Liste im aktuellen Verzeichnis.
-            todo-cli --show                                    # Zeigt die aktuelle Todo-Liste im aktuellen Verzeichnis an.
-            todo-cli --add "Einkaufen"                         # Fügt "Einkaufen" zur aktuellen Todo-Liste im aktuellen Verzeichnis hinzu.
-            todo-cli --delete 1                                # Löscht die Aufgabe mit Index 1 aus der aktuellen Todo-Liste im aktuellen Verzeichnis.
-            todo-cli --done 2                                  # Markiert die Aufgabe mit Index 2 als erledigt in der aktuellen Todo-Liste im aktuellen Verzeichnis.
-            todo-cli -r                                        # Löscht die aktuelle Todo-Liste im aktuellen Verzeichnis.
+            Examples:
+            todo-cli --create                                  # Creates a new todo list in the current directory.
+            todo-cli --show                                    # Shows the current todo list in the current directory.
+            todo-cli --add "Grocery shopping"                  # Adds "Grocery shopping" to the current todo list in the current directory.
+            todo-cli --delete 1                                # Deletes the task with index 1 from the current todo list in the current directory.
+            todo-cli --done 2                                  # Marks the task with index 2 as done in the current todo list in the current directory.
+            todo-cli -r                                        # Deletes the current todo list in the current directory.
 `)

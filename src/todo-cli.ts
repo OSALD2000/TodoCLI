@@ -7,7 +7,6 @@ import { Todos } from "./Todo";
 import { createID } from "./utils/create_Id";
 import { rmdirSync, rmSync } from "fs";
 import { plainToInstance } from 'class-transformer';
-import { filter_input } from "./utils/filter_input";
 import { isInsideGitRepositiry } from "./utils/isInsideGitRepositiry";
 import { addTodoGitIgnore } from './utils/addTodoGitIgnore';
 import { removeTodoGitIgnore } from "./utils/removeTodoGitIgnore";
@@ -62,7 +61,7 @@ else if (args.find(arg => arg === '--create')) {
         }
        
     } else {
-        console.log("hier ist schon eine Todo List erstellt");
+        console.error("hier ist schon eine Todo List erstellt");
         process.exit();
     }
 }
@@ -76,9 +75,14 @@ else if (args.find(arg => arg === '--show')) {
 
         console.log("Todo Title: ", todo.list_name);
 
-        todo.print_all_todos();
+        const done = args.find(arg => arg === '-d') ? true : false;
+        const hidden = args.find(arg => arg === '-hidden') ? true : false;
+
+        const show_only_done  = hidden ? hidden : done;
+        todo.print_all_todos(show_only_done, hidden);
+
     } else {
-        console.log("es existiert kein Todo-list hier!!");
+        console.error("es existiert kein Todo-list hier!!");
     }
     process.exit();
 }
@@ -95,23 +99,21 @@ else if (args.find(arg => arg === '--add')) {
 
         const text = input_array.join(" ")
 
-        if (args.length > idx_start && filter_input(text))
+        if (args.length > idx_start)
         {
             todos.addTodo(text);
             todos.save();
-
-            console.log("OK");
-            
         }else{
-            console.log("geben Sie gueltiges input");   
+            console.error("geben Sie gueltiges input");   
         }
 
     } else {
-        console.log("es existiert kein Todo-list hier!!");
+        console.error("es existiert kein Todo-list hier!!");
     }
     process.exit();
 
 }
+
 else if (args.find(arg => arg === '--done')){
     if (fs.existsSync(path.resolve(process.cwd(), ".todo"))) {
         const data = JSON.parse(fs.readFileSync(path.resolve(process.cwd(), ".todo/todo.json"), 'utf8'));
@@ -120,20 +122,18 @@ else if (args.find(arg => arg === '--done')){
 
         const idx = args.findIndex(arg => arg === '--done') + 1;
 
-        const index_to_move = parseInt(args[idx]);
-        console.log(index_to_move, args.length, idx);
+        const index_to_move = idx <= (args.length - 1) ? +args[idx] : NaN;
         
-        if (idx === (args.length - 1) && !Number.isNaN(index_to_move) ) {
-            const todo = todos.deleteTodo(index_to_move)!;
+        if (!Number.isNaN(index_to_move) && index_to_move < todos.all_todos.length) {
+            const todo = todos.deleteTodo(index_to_move, false)!;
             todos.addToDone(todo);
             todos.save();
-            console.log("OK");
         } else{
-            console.log("geben Sie gueltiges input");   
+            console.error("unvalide index");   
         }
 
     } else {
-        console.log("es existiert kein Todo-list hier!!");
+        console.error("es existiert kein Todo-list hier!!");
     }
     process.exit();
 }
@@ -147,44 +147,95 @@ else if (args.find(arg => arg === '--delete')) {
 
         const idx = args.findIndex(arg => arg === '--delete') + 1;
 
-        const index_to_delete = parseInt(args[idx]);
+        const index_to_delete = idx <= (args.length - 1) ? +args[idx] : NaN;
         
-        if (idx === (args.length - 1) && index_to_delete ) {
-            todos.deleteTodo(index_to_delete);
+        if (!Number.isNaN(index_to_delete)) {
+            if(!args.find(arg => arg === '-d')){
+                todos.deleteTodo(index_to_delete, false);
+            }
+            else{
+                todos.deleteTodo(index_to_delete, true);
+            }
             todos.save();
-            console.log("OK");
         } else{
-            console.log("geben Sie gueltiges input");   
+            console.error("geben Sie gueltiges input");   
         }
 
     } else {
-        console.log("es existiert kein Todo-list hier!!");
+        console.error("es existiert kein Todo-list hier!!");
     }
     process.exit();
 }
+
 
 else if (args.find(arg => arg === '-r' || arg === '--reset')) {
     if (fs.existsSync(path.resolve(process.cwd(), ".todo"))) {
-        rmSync(path.resolve(process.cwd(), ".todo/todo.json"));
-        rmdirSync(path.resolve(process.cwd(), ".todo"));
+
         const data = JSON.parse(fs.readFileSync(path.resolve(process.cwd(), ".todo/todo.json"), 'utf8'));
+
         const todos = plainToInstance(Todos, [data])[0];
 
-        if (todos.gitignore){
+        if(todos.gitignore){
             removeTodoGitIgnore(process.cwd());
-            todos.gitignore = false;
-            todos.save();
         }
 
-        console.log('Todo List gelöscht');
+        rmSync(path.resolve(process.cwd(), ".todo/todo.json"));
+        rmdirSync(path.resolve(process.cwd(), ".todo"));
     } else {
-        console.log("es existiert kein Todo-list hier!!");
+        console.error("es existiert kein Todo-list hier!!");
     }
     process.exit();
 }
 
+else if (args.find(arg => arg === '--ignore'))
+{
+    const data = JSON.parse(fs.readFileSync(path.resolve(process.cwd(), ".todo/todo.json"), 'utf8'));
+
+    const todos = plainToInstance(Todos, [data])[0];
+
+    if (args.find(arg => arg === '-n')){
+        if (todos.gitignore){
+            if(isInsideGitRepositiry()[0]){
+                removeTodoGitIgnore(process.cwd());
+                todos.gitignore = false;
+                todos.save();
+            }
+        }
+    }else{
+        if (!todos.gitignore){
+            if(isInsideGitRepositiry()[0]){
+                addTodoGitIgnore(process.cwd());
+                todos.gitignore = true;
+                todos.save();
+            }
+        }
+    }
+    process.exit();
+}
+else if (args.find(arg => arg === '--hide')){
+    if (fs.existsSync(path.resolve(process.cwd(), ".todo"))) {
+
+        const data = JSON.parse(fs.readFileSync(path.resolve(process.cwd(), ".todo/todo.json"), 'utf8'));
+
+        const todos = plainToInstance(Todos, [data])[0];
+
+        const idx = args.findIndex(arg => arg === '--hide') + 1;
+
+        const index_to_hide = idx <= (args.length - 1) ? +args[idx] : NaN;
+        
+        if (!Number.isNaN(index_to_hide)) {
+            todos.hideTodo(index_to_hide);
+        }
+
+        todos.save();
+    } else {
+        console.error("es existiert kein Todo-list hier!!");
+    }
+    process.exit();
+
+}
 else {
-    console.log("befehl kann nicht gefunden werden !!! \n");
+    console.error("befehl kann nicht gefunden werden !!! \n");
     process.exit();
 }
 

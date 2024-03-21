@@ -7,21 +7,21 @@ export const addTodoGitIgnore = (path_parmeter: string): boolean => {
         const gitignor_path = path.join(path_parmeter, ".gitignore");
         if (fs.existsSync(gitignor_path)) {
             try {
-                fs.readFile(gitignor_path,'utf8', (err, data)=>{
-                    if (err) {
-                        console.error('Fehler beim Lesen der Datei:', err);
-                        return;
-                    }
+                const data = fs.readFileSync(gitignor_path,'utf8');
+                
+                const lines = (data.split("\n"))
+                
+                if(lines.find(ignored => ignored.trim() === ".todo")){
+                    return true
+                }else{
+                    lines.push(".todo");
 
-                    const lines = (data.split("\n"))
-
-                    lines.push(".gitignore");
-                    
                     const updatedContent = lines.join("\n");
-
+                    
                     fs.writeFileSync(gitignor_path, updatedContent, 'utf8');
-                })
-                return true
+                
+                    return true
+                }
             } catch {
                 return false;
             }
