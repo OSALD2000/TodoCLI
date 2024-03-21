@@ -12,7 +12,7 @@
     <p><code>todo-cli</code> is a command-line tool for managing your todo lists directly from your terminal. With <code>todo-cli</code>, you can easily create, view, modify, and delete tasks in your todo lists without leaving the command line environment.</p>
     <h2>Installation</h2>
     <p>To install <code>todo-cli</code>, simply run:</p>
-    <pre><code>npm install -g todo-cli</code></pre>
+    <pre><code>npm install</code> <br> <code>npm link</code></pre>
     <p>This will install <code>todo-cli</code> globally on your system, allowing you to access it from anywhere in your terminal.</p>
     <h2>Usage</h2>
     <h3>Creating a Todo List</h3>
@@ -59,9 +59,9 @@ todo-cli --done 2                                  # Marks the task with index 2
 todo-cli -r                                        # Deletes the current todo list in the current directory.
 </code></pre>
     <h2>Contributing</h2>
-    <p>Contributions are welcome! If you find any issues or have suggestions for improvements, please feel free to open an issue or submit a pull request on <a href="https://github.com/your-username/todo-cli">GitHub</a>.</p>
+    <p>Contributions are welcome! If you find any issues or have suggestions for improvements, please feel free to open an issue or submit a pull request on <a href="https://github.com/OSALD2000/todo-cli">GitHub</a>.</p>
     <h2>License</h2>
-    <p>This project is licensed under the MIT License - see the <a href="LICENSE">LICENSE</a> file for details.</p>
+    <p>This project is licensed under the MIT License - see the LICENSE file for details.</p>
 </body>
 
 </html>
