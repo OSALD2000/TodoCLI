@@ -1,0 +1,1 @@
+export const createID = () => (Math.random() * (new Date()).getMilliseconds()).toString(); 

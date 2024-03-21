@@ -1,0 +1,28 @@
+{
+  "name": "todocli",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/todo-cli.js",
+  "bin": {
+    "todo-cli": "dist/todo-cli.js"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "cli",
+    "todo"
+  ],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^20.11.28"
+  },
+  "dependencies": {
+    "class-transformer": "^0.5.1",
+    "rimraf": "^5.0.5"
+  }
+}
