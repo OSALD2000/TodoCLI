@@ -4,7 +4,7 @@
   "description": "",
   "main": "dist/todo-cli.js",
   "bin": {
-    "todo-cli": "dist/todo-cli.js"
+    "todo-cli": "todo-cli.js"
   },
   "publishConfig": {
     "access": "public"
