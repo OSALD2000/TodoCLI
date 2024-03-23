@@ -1,4 +1,4 @@
-import { createID } from "./utils/create_Id";
+import { createID } from "../utils/create_Id";
 import * as fs from "fs";
 import path from "path";
 
@@ -6,7 +6,7 @@ class Todo{
     constructor(public id:string, public text:string, public date:string, public hidden:boolean=false){}
 }
 
-export class Todos {
+export class TodoList {
     private todos: Todo[] = [];
     private todos_done: Todo[] = [];
     public gitignore = false;
@@ -22,14 +22,13 @@ export class Todos {
 
     public deleteTodo(idx:number, done:boolean) : Todo | void
     {
-        if(done){
+        if(done){            
             if (idx < this.todos_done.length)
             {
                 return this.todos_done.splice(idx,1)[0]
             }else{
                 console.log("unvalid Index !!!");
             }
-
         }else{
             if (idx < this.todos.length)
             {
