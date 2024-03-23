@@ -1,4 +1,3 @@
-
 <h1>todo-cli</h1>
     <p><code>todo-cli</code> is a command-line tool for managing your todo lists directly from your terminal. With <code>todo-cli</code>, you can easily create, view, modify, and delete tasks in your todo lists without leaving the command line environment.</p>
     <h2>Installation</h2>
