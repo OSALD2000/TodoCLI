@@ -1,14 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>todo-cli</title>
-</head>
-
-<body>
-    <h1>todo-cli</h1>
+<h1>todo-cli</h1>
     <p><code>todo-cli</code> is a command-line tool for managing your todo lists directly from your terminal. With <code>todo-cli</code>, you can easily create, view, modify, and delete tasks in your todo lists without leaving the command line environment.</p>
     <h2>Installation</h2>
     <p>To install <code>todo-cli</code>, simply run:</p>
@@ -63,6 +54,3 @@ todo-cli -r                                        # Deletes the current todo li
     <p>Contributions are welcome! If you find any issues or have suggestions for improvements, please feel free to open an issue or submit a pull request on <a href="https://github.com/OSALD2000/todo-cli">GitHub</a>.</p>
     <h2>License</h2>
     <p>This project is licensed under the MIT License - see the LICENSE file for details.</p>
-</body>
-
-</html>
