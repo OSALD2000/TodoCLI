@@ -3,6 +3,7 @@ export enum COMMANDS
     ADD="--add",
     CREATE="--create",
     CREATE_MIT_IGNORE="-ig",
+    CREATE_MIT_NAME="-name",
     DELETE="--delete",
     DELETE_DONE="-d",
     DONE="--done",

@@ -25,7 +25,6 @@ export const create_commands = (args: string[]): Command[] => {
 
     if (args.length >= 0) {
         let indexs_array = getCommandsIdx(args);
-        console.log(indexs_array);
         
         indexs_array.forEach((command_index, idx) => {
             if (command_index >= 0) {
@@ -57,21 +56,22 @@ export const create_commands = (args: string[]): Command[] => {
                         args[start_idx] === COMMANDS.SHOW_HIDDEN ? command_option.push(COMMANDS.SHOW_HIDDEN) : false;
                     }
 
-                    commands.push(new Command(COMMANDS.SHOW, false, true, undefined, command_option))
+                    commands.push(new Command(COMMANDS.SHOW, false, command_option.length >0 , undefined, command_option))
                 }
 
                 if (args[command_index] === COMMANDS.HELP_LONG || args[command_index] === COMMANDS.HELP_SHORT) {
-                    commands.push(new Command(COMMANDS.HELP_LONG, false, true))
+                    commands.push(new Command(COMMANDS.HELP_LONG, false, false))
                 }
 
                 if (args[command_index] === COMMANDS.CREATE) {
                     const command_option: COMMANDS[] = [];
-
+                    
                     if (end_idx > 0) {
                         args[start_idx] === COMMANDS.CREATE_MIT_IGNORE ? command_option.push(COMMANDS.CREATE_MIT_IGNORE) : false;
                     }
 
-                    commands.push(new Command(COMMANDS.CREATE, false, true, undefined, command_option));
+                    commands.push(new Command(COMMANDS.CREATE, true, command_option.length >0 , undefined, command_option));
+
                 }
 
                 if (args[command_index] === COMMANDS.DELETE) {
@@ -90,17 +90,17 @@ export const create_commands = (args: string[]): Command[] => {
                     }
 
                     if (!Number.isNaN(idx_to_delete)) {
-                        commands.push(new Command(COMMANDS.DELETE, true, true, idx_to_delete, command_option));
+                        commands.push(new Command(COMMANDS.DELETE, true, command_option.length >0 , idx_to_delete, command_option));
                     } else {
                         console.error("--delete : unvalid index !!!");
                     }
                 } 
 
                 if (args[command_index] === COMMANDS.DONE) {
-                    const idx_to_move = (start_idx) < args.length ? +args[start_idx + 1] : NaN;
-
+                    const idx_to_move = (start_idx) < args.length ? +args[start_idx] : NaN;
+                    
                     if (!Number.isNaN(idx_to_move)) {
-                        commands.push(new Command(COMMANDS.DELETE, true, false, idx_to_move));
+                        commands.push(new Command(COMMANDS.DONE, true, false, idx_to_move));
                     } else {
                         console.error("--done : unvalid index !!!");
                     }
@@ -108,7 +108,7 @@ export const create_commands = (args: string[]): Command[] => {
 
                 if (args[command_index] === COMMANDS.HIDE) {
                     const idx_to_hide = (start_idx) < args.length ? +args[start_idx] : NaN;
-
+                    
                     if (!Number.isNaN(idx_to_hide)) {
                         commands.push(new Command(COMMANDS.DELETE, true, false, idx_to_hide));
                     } else {
@@ -127,7 +127,7 @@ export const create_commands = (args: string[]): Command[] => {
                         args[start_idx] === COMMANDS.NOT_IGNORE ? command_option.push(COMMANDS.NOT_IGNORE) : false;
                     }
 
-                    commands.push(new Command(COMMANDS.IGNORE, false, true, undefined, command_option));
+                    commands.push(new Command(COMMANDS.IGNORE, false, command_option.length >0 , undefined, command_option));
                 }
             }
 
