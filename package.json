@@ -1,6 +1,6 @@
 {
   "name": "ts_todo_cli",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "",
   "main": "dist/todo-cli.js",
   "bin": {
@@ -10,7 +10,7 @@
     "access": "public"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc"
   },
   "keywords": [
     "cli",
