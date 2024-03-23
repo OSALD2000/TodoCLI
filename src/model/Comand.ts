@@ -24,7 +24,8 @@ export class Command
                 run_command.done(this);
                 break;
 
-            case COMMANDS.HELP:
+            case COMMANDS.HELP_SHORT:
+            case COMMANDS.HELP_LONG:
                 run_command.help(this);
                 break;
 

@@ -6,7 +6,9 @@ const args = process.argv.slice(2);
 
 const commands = create_commands(args);
 
-commands.forEach(command => command.run());
+console.log(commands);
 
-process.exit();
+// commands.forEach(command => command.run());
+
+// process.exit();
 
