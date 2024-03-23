@@ -1,5 +1,5 @@
 {
-  "name": "todocli",
+  "name": "ts_todo_cli",
   "version": "1.0.0",
   "description": "",
   "main": "dist/todo-cli.js",
