@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import { create_commands } from "./src/utils/create_commands";
+import { create_commands } from "./utils/create_commands";
 
 const args = process.argv.slice(2);
 

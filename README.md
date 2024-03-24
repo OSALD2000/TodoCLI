@@ -3,7 +3,6 @@
     <h2>Installation</h2>
     <p>To install <code>todo-cli</code>, simply run:</p>
     <pre><code>npm install -g ts_todo_cli</code></pre>
-    <pre><code>npm link ts_todo_cli</code></pre>
     <p>This will install <code>todo-cli</code> globally on your system, allowing you to access it from anywhere in your terminal.</p>
     <h2>Usage</h2>
     <h3>Creating a Todo List</h3>

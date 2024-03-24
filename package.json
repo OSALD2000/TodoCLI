@@ -1,10 +1,10 @@
 {
   "name": "ts_todo_cli",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "",
   "main": "dist/todo-cli.js",
   "bin": {
-    "todo-cli": "todo-cli.js"
+    "todo-cli": "dist/todo-cli.js"
   },
   "publishConfig": {
     "access": "public"
@@ -17,7 +17,7 @@
     "todo"
   ],
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "@types/node": "^20.11.28"
   },
