@@ -1,6 +1,7 @@
 import { Command } from "../model/Comand";
 import { COMMANDS } from "../model/COMMANDS";
 import { run as run_command } from "../command/run";
+import { fail } from "./fail";
 import * as fs from "fs";
 import path from "path";
 
@@ -12,7 +13,7 @@ export function command_executer(command: Command) {
         if (!fs.existsSync(path.resolve(process.cwd(), ".todo"))) {
             run_command.create(command);
         } else {
-            console.error("todo List existiert in dem Ordner !!");
+            fail("A todo list already exists in this directory.");
         }
     } else if (fs.existsSync(path.resolve(process.cwd(), ".todo"))) {
         switch (command.befehl) {
@@ -48,10 +49,10 @@ export function command_executer(command: Command) {
                 break;
 
             default:
-                console.error("command not found!!");
+                fail("Command not found. Run todo-cli --help.");
                 break;
         }
     } else {
-        console.error("todo List existiert nicht in dem Ordner !!");
+        fail("No todo list in this directory. Run todo-cli --create first.");
     }
 }

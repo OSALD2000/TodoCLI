@@ -1,34 +1,22 @@
 import { Command } from "../model/Comand";
 import * as fs from "fs";
 import path from "path";
-import * as input from "node:readline";
-import {TodoList} from "../model/Todo";
-import { createID } from "../utils/create_Id";
-import { isInsideGitRepositiry } from "../utils/isInsideGitRepositiry";
-import { addTodoGitIgnore } from "../utils/addTodoGitIgnore";
+import { TodoList } from "../model/Todo";
+import { addTodoGitIgnore } from "../utils/gitignore";
 
-export const create = (command : Command) =>{
-        let created = false;
+export const create = (command: Command) => {
+    fs.mkdirSync(path.join(process.cwd(), ".todo"));
 
-        fs.mkdirSync(path.join(process.cwd(), ".todo"));
+    const todoList = TodoList.create("todo-list");
 
-        created = true
-
-        if (created) {
-            const name = "todo-list";
-
-            const todoList = new TodoList(createID(), name);
-
-            if(command.has_option){
-                    if(isInsideGitRepositiry()[0]){
-                        addTodoGitIgnore(process.cwd());
-                        todoList.gitignore = true;
-                    }
-            }
-
-            console.log("todo list created !! \n");
-
-            todoList.save();
-
+    if (command.has_option) {
+        if (addTodoGitIgnore(process.cwd())) {
+            todoList.gitignore = true;
+        } else {
+            console.log("Not inside a git repository, .gitignore left unchanged.");
         }
+    }
+
+    todoList.save();
+    console.log("Todo list created.");
 }

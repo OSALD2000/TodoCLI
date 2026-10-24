@@ -1,32 +1,44 @@
 {
   "name": "ts_todo_cli",
-  "version": "1.0.5",
-  "description": "",
+  "version": "1.1.0",
+  "description": "Per-directory todo lists in your terminal, stored in a local .todo folder.",
   "main": "dist/todo-cli.js",
   "bin": {
     "todo-cli": "dist/todo-cli.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "engines": {
+    "node": ">=18"
   },
   "publishConfig": {
     "access": "public"
   },
   "scripts": {
-    "build": "tsc"
+    "build": "node -e \"require('fs').rmSync('dist',{recursive:true,force:true})\" && tsc",
+    "test": "npm run build && node --test test/cli.test.mjs",
+    "prepublishOnly": "npm test"
   },
   "keywords": [
     "cli",
-    "todo"
+    "todo",
+    "todo-list",
+    "terminal",
+    "git"
   ],
-  "author": "",
+  "author": "OSALD2000 <os14052020@gmail.com>",
   "license": "MIT",
-  "devDependencies": {
-    "@types/node": "^20.11.28"
-  },
-  "dependencies": {
-    "class-transformer": "^0.5.1",
-    "rimraf": "^5.0.5"
-  },
   "repository": {
     "type": "git",
-    "url": "https://github.com/OSALD2000/TodoCLI.git"
+    "url": "git+https://github.com/OSALD2000/TodoCLI.git"
+  },
+  "homepage": "https://github.com/OSALD2000/TodoCLI#readme",
+  "bugs": {
+    "url": "https://github.com/OSALD2000/TodoCLI/issues"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.5",
+    "typescript": "^7.0.2"
   }
 }

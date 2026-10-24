@@ -1,27 +1,7 @@
 import { Command } from "../model/Comand";
-import * as fs from "fs";
-import path from "path";
-import {TodoList} from "../model/Todo";
-import { plainToInstance } from 'class-transformer';
+import { TodoList } from "../model/Todo";
 
-export const delete_command = (command : Command) =>{
-
-    const data = JSON.parse(fs.readFileSync(path.resolve(process.cwd(), ".todo/todo.json"), 'utf8'));
-
-    const todos = plainToInstance(TodoList, [data])[0];
-
-    const idx = command.value as number;
-
-    if (!Number.isNaN(idx)) {
-        if(command.has_option){
-            todos.deleteTodo(idx, true);
-        }
-        else{
-            todos.deleteTodo(idx, false);
-        }
-        todos.save();
-    } else{
-        console.error("geben Sie gueltiges input");   
-    }
-
+export const delete_command = (command: Command) => {
+    const todos = TodoList.load();
+    if (todos.deleteTodo(command.value as number, command.has_option)) todos.save();
 }

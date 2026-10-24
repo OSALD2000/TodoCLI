@@ -1,9 +1,9 @@
-import { SocketAddress } from "net";
 import { Command } from "../model/Comand"
 import { COMMANDS } from "../model/COMMANDS"
+import { fail } from "./fail"
 
 const getCommandsIdx = (args: string[]): number[] => {
-    const indexs_array = [];
+    const indexs_array: number[] = [];
      
     args.forEach((arg, idx)=>{
       if(Object.values(COMMANDS).includes(arg as COMMANDS)){        
@@ -40,8 +40,8 @@ export const create_commands = (args: string[]): Command[] => {
                         text = args.slice(start_idx)
                     }
 
-                    if (text.length < 0) {
-                        console.error("--add : no input text to add !!");
+                    if (text.length === 0) {
+                        fail("--add: no text to add.");
                     } else {
                         commands.push(new Command(COMMANDS.ADD, true, false, text.join(" ")))
                     }
@@ -92,7 +92,7 @@ export const create_commands = (args: string[]): Command[] => {
                     if (!Number.isNaN(idx_to_delete)) {
                         commands.push(new Command(COMMANDS.DELETE, true, command_option.length >0 , idx_to_delete, command_option));
                     } else {
-                        console.error("--delete : unvalid index !!!");
+                        fail("--delete: invalid index.");
                     }
                 } 
 
@@ -102,7 +102,7 @@ export const create_commands = (args: string[]): Command[] => {
                     if (!Number.isNaN(idx_to_move)) {
                         commands.push(new Command(COMMANDS.DONE, true, false, idx_to_move));
                     } else {
-                        console.error("--done : unvalid index !!!");
+                        fail("--done: invalid index.");
                     }
                 }
 
@@ -110,9 +110,9 @@ export const create_commands = (args: string[]): Command[] => {
                     const idx_to_hide = (start_idx) < args.length ? +args[start_idx] : NaN;
                     
                     if (!Number.isNaN(idx_to_hide)) {
-                        commands.push(new Command(COMMANDS.DELETE, true, false, idx_to_hide));
+                        commands.push(new Command(COMMANDS.HIDE, true, false, idx_to_hide));
                     } else {
-                        console.error("--done : unvalid index !!!");
+                        fail("--hide: invalid index.");
                     }
                 }
 
@@ -133,8 +133,8 @@ export const create_commands = (args: string[]): Command[] => {
 
         });
 
-        if (commands.length === 0) {
-            console.error("command not dound !!");
+        if (commands.length === 0 && !process.exitCode) {
+            fail("Command not found. Run todo-cli --help.");
         }
 
         return commands;

@@ -1,32 +1,17 @@
 import { Command } from "../model/Comand";
-import {TodoList} from "../model/Todo";
-import * as fs from "fs";
-import path from "path";
-import { plainToInstance } from 'class-transformer';
-import { isInsideGitRepositiry } from "../utils/isInsideGitRepositiry";
-import { removeTodoGitIgnore } from "../utils/removeTodoGitIgnore";
-import { addTodoGitIgnore } from "../utils/addTodoGitIgnore";
+import { TodoList } from "../model/Todo";
+import { addTodoGitIgnore, removeTodoGitIgnore } from "../utils/gitignore";
+import { fail } from "../utils/fail";
 
-export const ignore = (command : Command) =>{
-    const data = JSON.parse(fs.readFileSync(path.resolve(process.cwd(), ".todo/todo.json"), 'utf8'));
+export const ignore = (command: Command) => {
+    const todos = TodoList.load();
+    const ignored = !command.has_option;
 
-    const todos = plainToInstance(TodoList, [data])[0];
+    if (todos.gitignore === ignored) return;
 
-    if (command.has_option){
-        if (todos.gitignore){
-            if(isInsideGitRepositiry()[0]){
-                removeTodoGitIgnore(process.cwd());
-                todos.gitignore = false;
-                todos.save();
-            }
-        }
-    }else{
-        if (!todos.gitignore){
-            if(isInsideGitRepositiry()[0]){
-                addTodoGitIgnore(process.cwd());
-                todos.gitignore = true;
-                todos.save();
-            }
-        }
-    }
+    const changed = ignored ? addTodoGitIgnore(process.cwd()) : removeTodoGitIgnore(process.cwd());
+    if (!changed) return fail("Not inside a git repository, .gitignore left unchanged.");
+
+    todos.gitignore = ignored;
+    todos.save();
 }
