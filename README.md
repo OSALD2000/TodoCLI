@@ -52,6 +52,16 @@ npm install
 npm test        # builds and runs the CLI tests in a temporary directory
 ```
 
+### Coding agent skill
+
+The [TodoCLI development skill](skills/todocli-development/SKILL.md) helps coding agents plan and track implementation steps with TodoCLI. Install it for your agent across projects (the `skills` installer requires Node.js 22.20 or newer):
+
+```sh
+npx skills add OSALD2000/TodoCLI --skill todocli-development -g
+```
+
+You can also download the `SKILL.md` file from the link above.
+
 ## Deutsch
 
 `todo-cli` verwaltet eine kleine Aufgabenliste pro Ordner in `.todo/todo.json`.
@@ -93,6 +103,16 @@ Bei Fehlern endet das Programm mit Exit-Code `1`.
 npm install
 npm test        # baut das Projekt und testet die CLI in einem temporären Ordner
 ```
+
+### Skill für Coding-Agenten
+
+Der [TodoCLI-Entwicklungsskill](skills/todocli-development/SKILL.md) hilft Coding-Agenten, Umsetzungsschritte mit TodoCLI zu planen und nachzuverfolgen. Installation für deinen Agenten in allen Projekten (der `skills`-Installer benötigt Node.js 22.20 oder neuer):
+
+```sh
+npx skills add OSALD2000/TodoCLI --skill todocli-development -g
+```
+
+Die Datei `SKILL.md` lässt sich über den Link oben auch einzeln herunterladen.
 
 ## License
 
